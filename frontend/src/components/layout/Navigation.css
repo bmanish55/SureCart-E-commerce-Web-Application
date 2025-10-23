@@ -1,0 +1,23 @@
+/* Ensure proper z-index stacking */
+.header {
+  z-index: 1000;
+}
+
+.navigation {
+  z-index: 1001;
+}
+
+.nav-overlay {
+  z-index: 999;
+}
+
+.mobile-menu-toggle {
+  z-index: 1002;
+}
+
+/* Fix desktop navigation layout */
+@media (min-width: 769px) {
+  .navigation {
+    display: none; /* Hide mobile navigation on desktop */
+  }
+}

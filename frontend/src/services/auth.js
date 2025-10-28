@@ -17,28 +17,30 @@ export const authService = {
         email,
         password
       });
-      console.log('✅ Registration successful');
+      console.log('✅ Registration successful, response:', response.data);
       return response.data;
     } catch (error) {
-      console.error('❌ Registration failed:', error);
+      console.error('❌ Registration failed:', error.response?.data || error.message);
       throw error;
     }
   },
 
- async login(email, password) {
-  try {
-    console.log('🔄 Logging in user:', email);
-    const response = await api.post('http://localhost:5000/api/auth/login', {
-      email,
-      password
-    });
-    console.log('✅ Login API call successful');
-    return response.data;
-  } catch (error) {
-    console.error('❌ Login API call failed:', error);
-    throw error;
-  }
-},
+  async login(email, password) {
+    try {
+      console.log('🔄 Logging in user:', email);
+      const response = await api.post('/auth/login', {
+        email,
+        password
+      });
+      console.log('✅ Login API call successful, response:', response.data);
+      // Backend returns { message, token, user }
+      // Extract and return just what we need
+      return response.data;
+    } catch (error) {
+      console.error('❌ Login API call failed:', error.response?.data || error.message);
+      throw error;
+    }
+  },
 
   async getMe() {
     try {

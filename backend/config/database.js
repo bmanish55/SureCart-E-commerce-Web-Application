@@ -4,7 +4,7 @@ require('dotenv').config();
 const dbConfig = {
   host: process.env.DB_HOST || 'localhost',
   user: process.env.DB_USER || 'root',
-  password: process.env.DB_PASSWORD || 'root',
+  password: process.env.DB_PASSWORD || '845905',
   database: process.env.DB_NAME || 'ecommerce_db',
   waitForConnections: true,
   connectionLimit: 10,
@@ -28,10 +28,11 @@ async function testConnection() {
 async function initializeDatabase() {
   try {
     // Create database if not exists
+    // Use the dbConfig defaults/fallbacks so the initializer works even when .env is not set
     const connection = await mysql.createConnection({
-      host: process.env.DB_HOST,
-      user: process.env.DB_USER,
-      password: process.env.DB_PASSWORD
+      host: dbConfig.host,
+      user: dbConfig.user,
+      password: dbConfig.password
     });
     
     await connection.execute(`CREATE DATABASE IF NOT EXISTS ${process.env.DB_NAME}`);

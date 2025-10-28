@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useCart } from '../../context/CartContext';
@@ -8,8 +8,20 @@ import './Header.css';
 
 const Header = () => {
   const { user, isAuthenticated, logout } = useAuth();
-  const { getCartItemCount } = useCart();
-  const [isCartOpen, setIsCartOpen] = useState(false);
+  const { getCartItemCount, quickCartOpen, openQuickCart, closeQuickCart } = useCart();
+  const [showUserMenu, setShowUserMenu] = useState(false);
+  const userMenuRef = useRef(null);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (userMenuRef.current && !userMenuRef.current.contains(e.target)) {
+        setShowUserMenu(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -28,7 +40,7 @@ const Header = () => {
           {/* Logo */}
           <Link to="/" className="logo">
             <i className="fas fa-shopping-bag"></i>
-            <span>E-Store</span>
+            <span>E-Commerce Store</span>
           </Link>
 
           {/* Search Bar - Desktop */}
@@ -52,31 +64,54 @@ const Header = () => {
               <>
                 <button 
                   className="nav-link cart-link"
-                  onClick={() => setIsCartOpen(true)}
+                  onClick={() => openQuickCart()}
+                  aria-label="Open cart"
                 >
                   <i className="fas fa-shopping-cart"></i>
-                  Cart
                   {getCartItemCount() > 0 && (
                     <span className="cart-badge">{getCartItemCount()}</span>
                   )}
                 </button>
-                
-                <div className="user-menu">
-                  <button className="user-btn">
-                    <i className="fas fa-user"></i>
-                    {user?.name}
+
+                <div className="user-menu" ref={userMenuRef}>
+                  <button 
+                    className="user-btn"
+                    onClick={() => setShowUserMenu(!showUserMenu)}
+                    aria-haspopup="true"
+                    aria-expanded={showUserMenu}
+                  >
+                    <i className="fas fa-user-circle user-avatar"></i>
+                    <span className="user-name">Hi, {user?.name?.split(' ')[0]}</span>
+                    <i className="fas fa-caret-down user-caret" />
                   </button>
+
+                  {showUserMenu && (
+                    <div className="user-dropdown" role="menu">
+                      <Link to="/profile" className="user-dropdown-link" onClick={() => setShowUserMenu(false)}>
+                        <i className="fas fa-user"></i>
+                        Profile
+                      </Link>
+                      <Link to="/orders" className="user-dropdown-link" onClick={() => setShowUserMenu(false)}>
+                        <i className="fas fa-history"></i>
+                        Orders
+                      </Link>
+                      <Link to="/checkout" className="user-dropdown-link" onClick={() => setShowUserMenu(false)}>
+                        <i className="fas fa-credit-card"></i>
+                        Checkout
+                      </Link>
+                      <button className="user-dropdown-link logout" onClick={() => { setShowUserMenu(false); handleLogout(); }}>
+                        <i className="fas fa-sign-out-alt"></i>
+                        Logout
+                      </button>
+                    </div>
+                  )}
                 </div>
               </>
             ) : (
               <div className="auth-links">
-                <Link to="/login" className="nav-link">
-                  <i className="fas fa-sign-in-alt"></i>
-                  Login
-                </Link>
                 <Link to="/register" className="nav-link btn-primary">
                   <i className="fas fa-user-plus"></i>
-                  Register
+                  Login
                 </Link>
               </div>
             )}
@@ -101,10 +136,10 @@ const Header = () => {
       </div>
 
       {/* Cart Sidebar */}
-      {isCartOpen && (
+      {quickCartOpen && (
         <CartSidebar 
-          isOpen={isCartOpen}
-          onClose={() => setIsCartOpen(false)}
+          isOpen={quickCartOpen}
+          onClose={() => closeQuickCart()}
           onCheckout={handleCheckout}
         />
       )}

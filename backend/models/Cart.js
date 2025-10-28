@@ -65,7 +65,8 @@ class Cart {
   }
 
   static async getCartTotal(userId) {
-    const [cartItems] = await this.getCart(userId);
+    // this.getCart returns an array of cart item objects
+    const cartItems = await this.getCart(userId);
     return cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
   }
 }

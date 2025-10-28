@@ -17,6 +17,7 @@ export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
   const [cartTotal, setCartTotal] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [quickCartOpen, setQuickCartOpen] = useState(false);
   const { isAuthenticated, user } = useAuth();
 
   // Load cart from appropriate source (localStorage or API)
@@ -52,19 +53,25 @@ export const CartProvider = ({ children }) => {
     setCartTotal(parseFloat(total.toFixed(2)));
   };
 
+  const openQuickCart = () => setQuickCartOpen(true);
+  const closeQuickCart = () => setQuickCartOpen(false);
+  const toggleQuickCart = () => setQuickCartOpen(v => !v);
+
   const addToCart = async (product, quantity = 1) => {
     try {
+      console.log('addToCart called for product:', product.id, 'qty:', quantity, 'isAuthenticated:', isAuthenticated);
       let updatedItems;
 
       if (isAuthenticated) {
         // Add to cart via API
         const response = await cartService.addToCart(product.id, quantity);
+        console.log('addToCart API response:', response);
         updatedItems = response.items;
         setCartTotal(response.total);
       } else {
         // Add to localStorage for guests
         const existingItemIndex = cartItems.findIndex(item => item.product_id === product.id);
-        
+
         if (existingItemIndex > -1) {
           updatedItems = cartItems.map((item, index) =>
             index === existingItemIndex
@@ -85,12 +92,13 @@ export const CartProvider = ({ children }) => {
 
         saveCartToStorage(updatedItems);
         calculateTotal(updatedItems);
+        console.log('addToCart guest updated items:', updatedItems);
       }
 
       setCartItems(updatedItems || cartItems);
       return { success: true };
     } catch (error) {
-      console.error('Error adding to cart:', error);
+      console.error('Error adding to cart:', error.response?.data || error.message || error);
       return { 
         success: false, 
         message: error.response?.data?.message || 'Failed to add to cart' 
@@ -190,6 +198,7 @@ export const CartProvider = ({ children }) => {
     removeFromCart,
     clearCart,
     getCartItemCount
+    , quickCartOpen, openQuickCart, closeQuickCart, toggleQuickCart
   };
 
   return (

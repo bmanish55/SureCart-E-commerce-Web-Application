@@ -132,6 +132,70 @@
   color: var(--primary-color);
 }
 
+/* Avatar and dropdown styles */
+.user-avatar {
+  font-size: 1.25rem;
+  color: var(--primary-color);
+}
+
+.user-name {
+  display: inline-block;
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.user-caret {
+  margin-left: 0.25rem;
+  font-size: 0.85rem;
+  color: var(--text-light);
+}
+
+.user-menu {
+  position: relative;
+}
+
+.user-dropdown {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  background: var(--bg-white);
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-md);
+  border-radius: var(--radius-sm);
+  min-width: 180px;
+  z-index: 1500;
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem;
+}
+
+.user-dropdown-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  color: var(--text-dark);
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+}
+
+.user-dropdown-link:hover {
+  background: var(--bg-gray);
+  color: var(--primary-color);
+}
+
+.user-dropdown-link.logout {
+  border-top: 1px solid var(--border-light);
+  margin-top: 0.25rem;
+  padding-top: 0.75rem;
+}
+
 .auth-links {
   display: flex;
   align-items: center;

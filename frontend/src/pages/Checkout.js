@@ -15,6 +15,7 @@ const Checkout = () => {
     state: '',
     zipCode: '',
     country: 'United States',
+    paymentMethod: 'card', // 'card' or 'cod'
     cardNumber: '',
     expiryDate: '',
     cvv: '',
@@ -24,6 +25,7 @@ const Checkout = () => {
   const [error, setError] = useState('');
 
   const { cartItems, cartTotal, clearCart } = useCart();
+  const { updateCartItem, removeFromCart } = useCart();
   const { user } = useAuth();
   const navigate = useNavigate();
 
@@ -52,11 +54,12 @@ const Checkout = () => {
     setError('');
 
     try {
-      // Create order
-      const orderData = {
-        shippingAddress: `${formData.address}, ${formData.city}, ${formData.state} ${formData.zipCode}, ${formData.country}`,
-        // In a real app, you would process payment here
-      };
+        // Create order
+        const orderData = {
+          shippingAddress: `${formData.address}, ${formData.city}, ${formData.state} ${formData.zipCode}, ${formData.country}`,
+          paymentMethod: formData.paymentMethod,
+          // In a real app, you would process payment here when paymentMethod === 'card'
+        };
 
       const response = await api.post('/orders', orderData);
       
@@ -188,8 +191,15 @@ const Checkout = () => {
                       required
                     >
                       <option value="United States">United States</option>
+                      <option value="India">India</option>
                       <option value="Canada">Canada</option>
                       <option value="United Kingdom">United Kingdom</option>
+                      <option value="Australia">Australia</option>
+                      <option value="Germany">Germany</option>
+                      <option value="France">France</option>
+                      <option value="Japan">Japan</option>
+                      <option value="China">China</option>
+                      <option value="Brazil">Brazil</option>
                     </select>
                   </div>
                 </div>
@@ -201,63 +211,88 @@ const Checkout = () => {
                   <i className="fas fa-credit-card"></i>
                   Payment Information
                 </h2>
-                
-                <div className="form-grid">
-                  <div className="form-group full-width">
-                    <label htmlFor="cardNumber">Card Number *</label>
-                    <input
-                      type="text"
-                      id="cardNumber"
-                      name="cardNumber"
-                      value={formData.cardNumber}
-                      onChange={handleChange}
-                      required
-                      placeholder="1234 5678 9012 3456"
-                      maxLength="19"
-                    />
-                  </div>
 
-                  <div className="form-group">
-                    <label htmlFor="expiryDate">Expiry Date *</label>
+                <div className="payment-methods">
+                  <label className="payment-option">
                     <input
-                      type="text"
-                      id="expiryDate"
-                      name="expiryDate"
-                      value={formData.expiryDate}
+                      type="radio"
+                      name="paymentMethod"
+                      value="card"
+                      checked={formData.paymentMethod === 'card'}
                       onChange={handleChange}
-                      required
-                      placeholder="MM/YY"
-                      maxLength="5"
                     />
-                  </div>
-
-                  <div className="form-group">
-                    <label htmlFor="cvv">CVV *</label>
+                    Credit / Debit Card
+                  </label>
+                  <label className="payment-option">
                     <input
-                      type="text"
-                      id="cvv"
-                      name="cvv"
-                      value={formData.cvv}
+                      type="radio"
+                      name="paymentMethod"
+                      value="cod"
+                      checked={formData.paymentMethod === 'cod'}
                       onChange={handleChange}
-                      required
-                      placeholder="123"
-                      maxLength="3"
                     />
-                  </div>
-
-                  <div className="form-group full-width">
-                    <label htmlFor="nameOnCard">Name on Card *</label>
-                    <input
-                      type="text"
-                      id="nameOnCard"
-                      name="nameOnCard"
-                      value={formData.nameOnCard}
-                      onChange={handleChange}
-                      required
-                      placeholder="Enter name as shown on card"
-                    />
-                  </div>
+                    Pay On Delivery (Cash on Delivery)
+                  </label>
                 </div>
+
+                {formData.paymentMethod === 'card' && (
+                  <div className="form-grid">
+                    <div className="form-group full-width">
+                      <label htmlFor="cardNumber">Card Number *</label>
+                      <input
+                        type="text"
+                        id="cardNumber"
+                        name="cardNumber"
+                        value={formData.cardNumber}
+                        onChange={handleChange}
+                        required
+                        placeholder="1234 5678 9012 3456"
+                        maxLength="19"
+                      />
+                    </div>
+
+                    <div className="form-group">
+                      <label htmlFor="expiryDate">Expiry Date *</label>
+                      <input
+                        type="text"
+                        id="expiryDate"
+                        name="expiryDate"
+                        value={formData.expiryDate}
+                        onChange={handleChange}
+                        required
+                        placeholder="MM/YY"
+                        maxLength="5"
+                      />
+                    </div>
+
+                    <div className="form-group">
+                      <label htmlFor="cvv">CVV *</label>
+                      <input
+                        type="text"
+                        id="cvv"
+                        name="cvv"
+                        value={formData.cvv}
+                        onChange={handleChange}
+                        required
+                        placeholder="123"
+                        maxLength="3"
+                      />
+                    </div>
+
+                    <div className="form-group full-width">
+                      <label htmlFor="nameOnCard">Name on Card *</label>
+                      <input
+                        type="text"
+                        id="nameOnCard"
+                        name="nameOnCard"
+                        value={formData.nameOnCard}
+                        onChange={handleChange}
+                        required
+                        placeholder="Enter name as shown on card"
+                      />
+                    </div>
+                  </div>
+                )}
               </section>
 
               {error && (
@@ -300,7 +335,31 @@ const Checkout = () => {
                     </div>
                     <div className="item-details">
                       <h4>{item.name}</h4>
-                      <p>Qty: {item.quantity}</p>
+                      <div className="qty-controls">
+                        <button
+                          className="qty-btn"
+                          onClick={() => updateCartItem(item.product_id, item.quantity - 1)}
+                          aria-label={`Decrease quantity of ${item.name}`}
+                          disabled={item.quantity <= 1}
+                        >
+                          -
+                        </button>
+                        <span className="qty-value">{item.quantity}</span>
+                        <button
+                          className="qty-btn"
+                          onClick={() => updateCartItem(item.product_id, item.quantity + 1)}
+                          aria-label={`Increase quantity of ${item.name}`}
+                        >
+                          +
+                        </button>
+                        <button
+                          className="remove-btn"
+                          onClick={() => removeFromCart(item.product_id)}
+                          aria-label={`Remove ${item.name} from cart`}
+                        >
+                          <i className="fas fa-trash"></i>
+                        </button>
+                      </div>
                     </div>
                     <div className="item-total">
                       {formatPrice(item.price * item.quantity)}

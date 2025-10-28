@@ -7,23 +7,21 @@ import './ProductCard.css';
 
 const ProductCard = ({ product }) => {
   const [isAdding, setIsAdding] = useState(false);
-  const { addToCart } = useCart();
+  const { addToCart, openQuickCart } = useCart();
   const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
   const handleAddToCart = async (e) => {
     e.preventDefault();
     e.stopPropagation();
-    
-    if (!isAuthenticated) {
-      // Redirect to login page with return URL
-      navigate('/login', { state: { from: '/products' } });
-      return;
-    }
+    // Allow adding to cart for both guests and authenticated users
+    // (cartService will handle persistence: localStorage for guests, API for auth users)
 
     setIsAdding(true);
     try {
       await addToCart(product, 1);
+      // open quick cart to show the recently added item
+      openQuickCart();
     } catch (error) {
       console.error('Error adding to cart:', error);
     } finally {
@@ -81,8 +79,6 @@ const ProductCard = ({ product }) => {
                 <i className="fas fa-spinner fa-spin"></i>
               ) : isOutOfStock ? (
                 'Out of Stock'
-              ) : !isAuthenticated ? (
-                'Login to Buy'
               ) : (
                 <>
                   <i className="fas fa-cart-plus"></i>

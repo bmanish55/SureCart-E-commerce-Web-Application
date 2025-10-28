@@ -2,3 +2,7 @@ node_modules/
 .env
 uploads/*
 !.gitkeep
+
+copilot-instructions.md
+
+Guide/

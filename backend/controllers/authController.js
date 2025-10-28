@@ -104,3 +104,24 @@ exports.getMe = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
+
+// Update user's editable fields (only password for now)
+exports.updateMe = async (req, res) => {
+  try {
+    const { password } = req.body;
+
+    if (!password || password.length < 6) {
+      return res.status(400).json({ message: 'Password must be at least 6 characters' });
+    }
+
+    const success = await User.updatePassword(req.user.id, password);
+    if (!success) {
+      return res.status(500).json({ message: 'Failed to update password' });
+    }
+
+    res.json({ message: 'Password updated successfully' });
+  } catch (error) {
+    console.error('Update user error:', error);
+    res.status(500).json({ message: 'Server error while updating user' });
+  }
+};

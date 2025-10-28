@@ -1,0 +1,25 @@
+.policy-page {
+  padding: 2rem 1rem;
+  background: var(--bg-white);
+  color: var(--text-dark);
+}
+
+.policy-page h1 {
+  font-size: 1.75rem;
+  margin-bottom: 1rem;
+}
+
+.policy-page h2 {
+  font-size: 1.25rem;
+  margin-top: 1rem;
+}
+
+.policy-page p {
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.policy-page.container {
+  max-width: 900px;
+  margin: 0 auto;
+}

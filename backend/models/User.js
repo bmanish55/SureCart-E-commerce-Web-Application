@@ -38,6 +38,16 @@ class User {
   static async comparePassword(plainPassword, hashedPassword) {
     return await bcrypt.compare(plainPassword, hashedPassword);
   }
+
+  static async updatePassword(id, newPassword) {
+    const saltRounds = 10;
+    const hashed = await bcrypt.hash(newPassword, saltRounds);
+    const [result] = await pool.execute(
+      'UPDATE users SET password = ? WHERE id = ?',
+      [hashed, id]
+    );
+    return result.affectedRows > 0;
+  }
 }
 
 module.exports = User;

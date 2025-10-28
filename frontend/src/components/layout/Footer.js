@@ -17,16 +17,16 @@ const Footer = () => {
               Quality products at affordable prices.
             </p>
             <div className="social-links">
-              <a href="#" aria-label="Facebook">
+              <a href="https://www.facebook.com/" aria-label="Facebook">
                 <i className="fab fa-facebook"></i>
               </a>
-              <a href="#" aria-label="Twitter">
+              <a href="https://x.com/" aria-label="Twitter">
                 <i className="fab fa-twitter"></i>
               </a>
-              <a href="#" aria-label="Instagram">
+              <a href="https://www.instagram.com/accounts/login/?hl=en" aria-label="Instagram">
                 <i className="fab fa-instagram"></i>
               </a>
-              <a href="#" aria-label="LinkedIn">
+              <a href="https://www.linkedin.com/in/tanvi-dogmane/" aria-label="LinkedIn">
                 <i className="fab fa-linkedin"></i>
               </a>
             </div>
@@ -61,18 +61,18 @@ const Footer = () => {
               </p>
               <p>
                 <i className="fas fa-phone"></i>
-                +1 (555) 123-4567
+                +91 8459059460 
               </p>
               <p>
                 <i className="fas fa-envelope"></i>
-                support@estore.com
+                tanvid.mca_iom@bkc.met.edu
               </p>
             </div>
           </div>
         </div>
 
         <div className="footer-bottom">
-          <p>&copy; 2024 E-Store. All rights reserved.</p>
+          <p>&copy; 2025 E-Commerce Store. All rights reserved.</p>
           <div className="footer-bottom-links">
             <Link to="/privacy">Privacy Policy</Link>
             <Link to="/terms">Terms of Service</Link>

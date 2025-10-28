@@ -286,38 +286,7 @@ const Navigation = () => {
         </div>
       </nav>
 
-      {/* User Menu Dropdown (Desktop) */}
-      {isAuthenticated && (
-        <div className={`user-menu-dropdown ${isUserMenuOpen ? 'open' : ''}`}>
-          <div className="user-menu-header">
-            <div className="user-avatar">
-              <i className="fas fa-user-circle"></i>
-            </div>
-            <div className="user-details">
-              <span className="user-name">{user?.name}</span>
-              <span className="user-email">{user?.email}</span>
-            </div>
-          </div>
-          <div className="user-menu-links">
-            <Link to="/profile" className="user-menu-link">
-              <i className="fas fa-user"></i>
-              My Profile
-            </Link>
-            <Link to="/orders" className="user-menu-link">
-              <i className="fas fa-history"></i>
-              Order History
-            </Link>
-            <Link to="/wishlist" className="user-menu-link">
-              <i className="fas fa-heart"></i>
-              Wishlist
-            </Link>
-            <button onClick={handleLogout} className="user-menu-link logout">
-              <i className="fas fa-sign-out-alt"></i>
-              Logout
-            </button>
-          </div>
-        </div>
-      )}
+      {/* Desktop user dropdown removed to avoid duplicate UI — Header now provides the desktop user menu */}
     </>
   );
 };

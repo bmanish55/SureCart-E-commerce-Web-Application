@@ -61,10 +61,10 @@
   --color-danger-800: #991b1b;
   --color-danger-900: #7f1d1d;
 
-  /* Semantic Colors */
-  --primary-color: var(--color-primary-500);
-  --primary-dark: var(--color-primary-600);
-  --primary-light: var(--color-primary-400);
+  /* Semantic Colors - updated auth-friendly palette (teal primary) */
+  --primary-color: #06b6d4; /* teal */
+  --primary-dark: #0ea5a4; /* darker teal */
+  --primary-light: #7dd3f5; /* light teal */
 
   --secondary-color: var(--color-gray-500);
   --secondary-dark: var(--color-gray-600);
@@ -103,7 +103,7 @@
   /* Border Colors */
   --border-primary: var(--color-gray-200);
   --border-secondary: var(--color-gray-300);
-  --border-focus: var(--color-primary-500);
+  --border-focus: var(--primary-color);
 
   /* Shadow System */
   --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.05);

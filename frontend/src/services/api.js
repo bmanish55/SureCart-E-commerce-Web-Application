@@ -11,7 +11,10 @@ const api = axios.create({
 // Request interceptor to add auth token
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('token');
+    // Stored tokens are saved via JSON.stringify in localStorage helpers.
+    // Parse the stored value so we don't send extra quotes in the header.
+    const raw = localStorage.getItem('token');
+    const token = raw ? JSON.parse(raw) : null;
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }

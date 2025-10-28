@@ -1,0 +1,53 @@
+.order-success-page {
+  padding: 3rem 0;
+  display: flex;
+  justify-content: center;
+}
+
+.success-card {
+  max-width: 700px;
+  width: 100%;
+  text-align: center;
+  background: var(--bg-white);
+  padding: 2.5rem;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-light);
+}
+
+.success-icon {
+  font-size: 3rem;
+  color: var(--success-color, #16a34a);
+  margin-bottom: 1rem;
+}
+
+.success-card h1 {
+  margin: 0 0 0.5rem 0;
+}
+
+.success-message {
+  color: var(--text-dark);
+  margin-bottom: 0.5rem;
+}
+
+.order-total {
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.success-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.support-note {
+  margin-top: 1.25rem;
+  color: var(--text-light);
+}
+
+.support-note a {
+  text-decoration: none;
+  color: inherit;
+}

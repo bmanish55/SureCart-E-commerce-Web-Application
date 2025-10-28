@@ -1,4 +1,4 @@
-# E-commerce (Sample Full‑Stack App)
+# E-commerce Web Application
 
 This repository is a sample full‑stack e‑commerce application (Node/Express backend + React frontend). The project includes authentication, product listings, cart, checkout and order flows.
 
@@ -71,21 +71,13 @@ These steps assume you've unzipped the project to a folder (for example `D:\proj
 - If MySQL user cannot `CREATE DATABASE`, create `ecommerce_db` manually and ensure `.env` DB credentials can access it.
 - If you change `JWT_SECRET`, any previously issued tokens will become invalid.
 
-## Demo video (add your link or embed)
+## Demo video 
 
-Add a short demo video to help reviewers see the app in action. You can either:
 
-- Paste a YouTube/Vimeo link here (recommended):
 
-  Example:
+https://github.com/user-attachments/assets/77366792-e355-419c-8e66-efe93ded4c5f
 
-  https://youtu.be/YOUR_VIDEO_ID
 
-- Or embed an iframe (if hosting the README on a place that supports HTML embeds). Example Markdown link:
-
-  [Watch demo video](https://youtu.be/YOUR_VIDEO_ID)
-
--- Demo notes (suggested): show logging in, adding items to cart, checkout flow, and orders page.
 
 ## Useful commands
 - Start backend (dev): `npm run dev` (from `backend/`)

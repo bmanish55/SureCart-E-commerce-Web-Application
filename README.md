@@ -1,10 +1,7 @@
 # E-commerce Web Application
 
-This repository is a sample full‑stack e‑commerce application (Node/Express backend + React frontend). The project includes authentication, product listings, cart, checkout and order flows.
+This repository is a full‑stack e‑commerce application (Node/Express backend + React frontend). The project includes authentication, product listings, cart, checkout and order flows.
 
-This README gives simple, copy‑pasteable steps to run the project locally and a placeholder section where you can add a demo video (link or embed).
-
----
 
 ## Quick overview
 - Backend: Node.js + Express, MySQL (uses mysql2/promise)
@@ -89,9 +86,8 @@ https://github.com/user-attachments/assets/77366792-e355-419c-8e66-efe93ded4c5f
 - `EADDRINUSE` on port 5000: change `PORT` in `backend/.env` or stop the process using that port.
 - 401 errors: check `JWT_SECRET` and confirm frontend is passing Authorization header (the app stores token in localStorage).
 
-## Contact / Next steps
-- To add a demo video, replace the placeholder above with your YouTube URL.
-- If you'd like I can add `backend/.env.example` and `frontend/.env.example` files into the repo.
+## Contact Devloper
+Tanvi Dogmane: tanvidogmane@gmail.com
 
 ---
 

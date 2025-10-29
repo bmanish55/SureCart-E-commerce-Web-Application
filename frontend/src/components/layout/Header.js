@@ -40,7 +40,7 @@ const Header = () => {
           {/* Logo */}
           <Link to="/" className="logo">
             <i className="fas fa-shopping-bag"></i>
-            <span>E-Commerce Store</span>
+            <span>SureCart</span>
           </Link>
 
           {/* Search Bar - Desktop */}

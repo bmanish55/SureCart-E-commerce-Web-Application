@@ -6,7 +6,7 @@ const Returns = () => {
     <div className="policy-page container">
       <h1>Returns Policy</h1>
       <p>
-        This Returns Policy is sample content for the E-Commerce Store demo. It explains how returns
+        This Returns Policy is sample content for the SureCart demo. It explains how returns
         and refunds are handled for demonstration purposes.
       </p>
 

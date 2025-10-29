@@ -1,6 +1,6 @@
-# E-commerce Web Application
+# SureCart Web Application
 
-This repository is a full‑stack e‑commerce application (Node/Express backend + React frontend). The project includes authentication, product listings, cart, checkout and order flows.
+This repository is a full‑stack SureCart application (Node/Express backend + React frontend). The project includes authentication, product listings, cart, checkout and order flows.
 
 
 ## Quick overview

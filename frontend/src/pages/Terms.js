@@ -6,7 +6,7 @@ const Terms = () => {
     <div className="policy-page container">
       <h1>Terms of Service</h1>
       <p>
-        These Terms of Service are sample content for the E-Commerce Store demo. They outline
+        These Terms of Service are sample content for the SureCart demo. They outline
         the basic rules for using the site and making purchases. This is placeholder text and
         should be replaced by legally reviewed terms in a production environment.
       </p>

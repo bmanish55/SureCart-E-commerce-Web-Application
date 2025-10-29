@@ -30,7 +30,7 @@ app.use('/api/orders', orderRoutes);
 
 // Health check route
 app.get('/api/health', (req, res) => {
-  res.json({ message: 'E-commerce API is running!' });
+  res.json({ message: 'SureCart API is running!' });
 });
 
 // Error handling middleware

@@ -1,6 +1,6 @@
-# E-Commerce Website
+# SureCart Website
 
-A full-stack e-commerce website built with React.js frontend and Node.js backend with MySQL database.
+A full-stack SureCart website built with React.js frontend and Node.js backend with MySQL database.
 
 ## Features
 

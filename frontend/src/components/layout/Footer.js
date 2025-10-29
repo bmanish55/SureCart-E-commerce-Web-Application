@@ -4,34 +4,36 @@ import './Footer.css';
 
 const Footer = () => {
   return (
-    <footer className="footer">
+    <footer className="footer" role="contentinfo">
       <div className="container">
         <div className="footer-content">
+          {/* Brand Section */}
           <div className="footer-section">
             <Link to="/" className="logo">
               <i className="fas fa-shopping-bag"></i>
-              <span>E-Store</span>
+              <span>SureCart</span>
             </Link>
             <p className="footer-description">
               Your one-stop destination for all your shopping needs. 
-              Quality products at affordable prices.
+              Quality products at affordable prices, delivered with care.
             </p>
             <div className="social-links">
-              <a href="https://www.facebook.com/" aria-label="Facebook">
+              <a href="https://www.facebook.com/" aria-label="Visit our Facebook page" target="_blank" rel="noopener noreferrer">
                 <i className="fab fa-facebook"></i>
               </a>
-              <a href="https://x.com/" aria-label="Twitter">
+              <a href="https://x.com/" aria-label="Visit our Twitter page" target="_blank" rel="noopener noreferrer">
                 <i className="fab fa-twitter"></i>
               </a>
-              <a href="https://www.instagram.com/accounts/login/?hl=en" aria-label="Instagram">
+              <a href="https://www.instagram.com/accounts/login/?hl=en" aria-label="Visit our Instagram page" target="_blank" rel="noopener noreferrer">
                 <i className="fab fa-instagram"></i>
               </a>
-              <a href="https://www.linkedin.com/in/tanvi-dogmane/" aria-label="LinkedIn">
+              <a href="https://www.linkedin.com/in/tanvi-dogmane/" aria-label="Visit our LinkedIn page" target="_blank" rel="noopener noreferrer">
                 <i className="fab fa-linkedin"></i>
               </a>
             </div>
           </div>
 
+          {/* Quick Links Section */}
           <div className="footer-section">
             <h3>Quick Links</h3>
             <ul className="footer-links">
@@ -42,6 +44,7 @@ const Footer = () => {
             </ul>
           </div>
 
+          {/* Categories Section */}
           <div className="footer-section">
             <h3>Categories</h3>
             <ul className="footer-links">
@@ -52,32 +55,34 @@ const Footer = () => {
             </ul>
           </div>
 
+          {/* Contact Info Section */}
           <div className="footer-section">
             <h3>Contact Info</h3>
             <div className="contact-info">
-              <p>
+              <p title="Our Location">
                 <i className="fas fa-map-marker-alt"></i>
-                123 Shopping Street, City, State 12345
+                <span>Nashik, Maharashtra, India</span>
               </p>
-              <p>
+              <p title="Call us">
                 <i className="fas fa-phone"></i>
-                +91 8459059460 
+                <a href="tel:+918459059460" style={{ color: 'inherit', textDecoration: 'none' }}>+91 8459059460</a>
               </p>
-              <p>
+              <p title="Email us">
                 <i className="fas fa-envelope"></i>
-                tanvid.mca_iom@bkc.met.edu
+                <a href="mailto:tanvid.mca_iom@bkc.met.edu" style={{ color: 'inherit', textDecoration: 'none' }}>tanvid.mca_iom@bkc.met.edu</a>
               </p>
             </div>
           </div>
         </div>
 
+        {/* Footer Bottom */}
         <div className="footer-bottom">
-          <p>&copy; 2025 E-Commerce Store. All rights reserved.</p>
-          <div className="footer-bottom-links">
+          <p>&copy; 2025 SureCart. All rights reserved.</p>
+          <nav className="footer-bottom-links">
             <Link to="/privacy">Privacy Policy</Link>
             <Link to="/terms">Terms of Service</Link>
             <Link to="/returns">Returns Policy</Link>
-          </div>
+          </nav>
         </div>
       </div>
     </footer>

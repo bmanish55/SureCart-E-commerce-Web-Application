@@ -35,7 +35,7 @@ const Home = () => {
         <div className="container">
           <div className="hero-content">
             <div className="hero-text">
-              <h1>Welcome to E-Store</h1>
+              <h1>Welcome to SureCart</h1>
               <p>Discover amazing products at unbeatable prices. Shop with confidence and enjoy fast delivery.</p>
               <div className="hero-actions">
                 <Link to="/products" className="btn btn-primary btn-large">
@@ -49,7 +49,7 @@ const Home = () => {
               </div>
             </div>
             <div className="hero-image">
-              <img src="/images/hero-shopping.jpg" alt="Shopping" />
+              <img src="/images/ShoppingCart.gif" alt="Shopping" />
             </div>
           </div>
         </div>
@@ -63,7 +63,7 @@ const Home = () => {
             <div className="feature-card">
               <i className="fas fa-shipping-fast"></i>
               <h3>Free Shipping</h3>
-              <p>Free delivery on orders over $50</p>
+              <p>Free delivery on orders over ₨ 50</p>
             </div>
             <div className="feature-card">
               <i className="fas fa-shield-alt"></i>

@@ -94,7 +94,7 @@ User enters credentials at `http://localhost:3000/login` → logs in successfull
 ### Check 1: Backend is Running
 ```bash
 curl http://localhost:5000/api/health
-# Should return: {"message":"E-commerce API is running!"}
+# Should return: {"message":"SureCart API is running!"}
 ```
 
 ### Check 2: Database Connection

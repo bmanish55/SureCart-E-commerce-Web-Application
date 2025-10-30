@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../../context/CartContext';
 import { useAuth } from '../../context/AuthContext';
+import { useWishlist } from '../../context/WishlistContext';
 import { formatPrice } from '../../utils/helpers';
 import './ProductCard.css';
 
 const ProductCard = ({ product }) => {
   const [isAdding, setIsAdding] = useState(false);
   const { addToCart, openQuickCart } = useCart();
+  const { addToWishlist, isInWishlist, openWishlist, removeFromWishlist } = useWishlist();
   const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
@@ -30,6 +32,22 @@ const ProductCard = ({ product }) => {
   };
 
   const isOutOfStock = product.stock_quantity === 0;
+  const inWishlist = isInWishlist(product.id);
+
+  const handleAddToWishlist = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (inWishlist) {
+      removeFromWishlist(product.id);
+      return;
+    }
+
+    const res = addToWishlist(product);
+    if (res.success) {
+      // open the slide-down wishlist preview
+      openWishlist();
+    }
+  };
 
   return (
     <div className="product-card card">
@@ -67,8 +85,9 @@ const ProductCard = ({ product }) => {
             </span>
           </div>
           
-          <div className="product-footer">
+            <div className="product-footer">
             <span className="product-price">{formatPrice(product.price)}</span>
+            <div className="product-actions">
             <button
               className={`add-to-cart-btn ${isAdding ? 'adding' : ''} ${isOutOfStock ? 'disabled' : ''}`}
               onClick={handleAddToCart}
@@ -86,6 +105,25 @@ const ProductCard = ({ product }) => {
                 </>
               )}
             </button>
+            <button
+              className={`wishlist-btn ${inWishlist ? 'in-wishlist' : ''}`}
+              onClick={handleAddToWishlist}
+              aria-pressed={inWishlist}
+              aria-label={inWishlist ? `Remove ${product.name} from wishlist` : `Add ${product.name} to wishlist`}
+            >
+              {inWishlist ? (
+                <>
+                  <i className="fas fa-heart"></i>
+                  Remove Wishlist
+                </>
+              ) : (
+                <>
+                  <i className="far fa-heart"></i>
+                  Add to Wishlist
+                </>
+              )}
+            </button>
+            </div>
           </div>
         </div>
       </Link>

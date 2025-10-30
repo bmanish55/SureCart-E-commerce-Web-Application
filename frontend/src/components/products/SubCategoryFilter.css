@@ -1,0 +1,286 @@
+.subcategory-filter {
+  background: linear-gradient(135deg, #f5f7fa 0%, #e9ecf1 100%);
+  padding: 3rem 2rem;
+  margin-bottom: 2rem;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.subcategory-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 3rem;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.category-oval-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  /* make wrapper a positioning context so subcategories can be absolutely positioned
+     which prevents them from affecting the surrounding layout (no shifting of other circles) */
+  position: relative;
+  /* width for the rounded card layout - keeps consistent spacing */
+  width: 260px;
+}
+
+.category-oval {
+  /* Rounded card style */
+  width: 100%;
+  height: 64px;
+  border-radius: 14px;
+  border: 2px solid var(--border-light);
+  background: linear-gradient(180deg, #ffffff 0%, #fbfdff 100%);
+  color: var(--text-dark);
+  cursor: pointer;
+  transition: all 0.22s cubic-bezier(0.2, 0, 0.2, 1);
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0 1rem;
+  font-weight: 700;
+  box-shadow: 0 6px 18px rgba(10, 20, 40, 0.06);
+  position: relative;
+  overflow: visible;
+}
+
+.category-oval::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.1);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.category-oval:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px rgba(10, 20, 40, 0.12);
+  border-color: var(--primary-color);
+}
+
+.category-oval:hover::before {
+  opacity: 1;
+}
+
+.category-oval.expanded {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 36px rgba(10, 20, 40, 0.14);
+  border-color: var(--primary-color);
+  /* subtle tint for expanded state */
+  background: linear-gradient(180deg, #f6fbff 0%, #eef8f5 100%);
+}
+
+.oval-icon {
+  font-size: 1.6rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: rgba(74, 144, 226, 0.08);
+  color: var(--primary-color);
+}
+
+.oval-name {
+  font-size: 0.95rem;
+  text-align: left;
+  line-height: 1.1;
+  position: relative;
+  z-index: 1;
+  color: var(--text-dark);
+}
+
+.subcategories-list {
+  display: none;
+  /* absolutely position subcategory container so it overlays and doesn't push other items */
+  position: absolute;
+  top: calc(100% + 12px);
+  /* align overlay to the left edge of the card */
+  left: 0;
+  transform: none;
+  z-index: 30;
+  /* show subcategories horizontally by default */
+  flex-direction: row;
+  gap: 0.6rem;
+  white-space: nowrap;
+  align-items: center;
+  pointer-events: auto;
+  /* floating panel look */
+  background: #ffffff;
+  padding: 0.6rem;
+  border-radius: 10px;
+  border: 1px solid var(--border-light);
+  box-shadow: 0 10px 30px rgba(10, 20, 40, 0.08);
+}
+
+.subcategories-list.expanded-show {
+  display: flex;
+  animation: slideDown 0.18s ease-out;
+}
+
+/* caret/arrow pointing up from the overlay to the card */
+.subcategories-list::before {
+  content: '';
+  position: absolute;
+  top: -7px;
+  left: 28px;
+  width: 12px;
+  height: 12px;
+  background: #ffffff;
+  transform: rotate(45deg);
+  box-shadow: -3px -3px 6px rgba(10, 20, 40, 0.03);
+  border-left: 1px solid var(--border-light);
+  border-top: 1px solid var(--border-light);
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.subcategory-item {
+  padding: 0.6rem 1rem;
+  background: white;
+  border: 2px solid var(--border-light);
+  border-radius: var(--radius-md);
+  color: var(--text-dark);
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.subcategory-item:hover {
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+  background: rgba(74, 144, 226, 0.05);
+  transform: translateX(4px);
+}
+
+.subcategory-item:active {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+}
+
+/* Mobile Styles */
+@media (max-width: 1024px) {
+  .subcategory-container {
+    gap: 2rem;
+  }
+
+  .category-oval {
+    width: 90px;
+    height: 90px;
+  }
+
+  .oval-icon {
+    font-size: 1.75rem;
+  }
+
+  .oval-name {
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .subcategory-filter {
+    padding: 2rem 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .subcategory-container {
+    gap: 1.5rem;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .category-oval-wrapper {
+    width: 100%;
+    max-width: 250px;
+  }
+
+  .category-oval {
+    width: 85px;
+    height: 85px;
+  }
+
+  .oval-icon {
+    font-size: 1.5rem;
+  }
+
+  .oval-name {
+    font-size: 0.7rem;
+  }
+
+  /* On smaller screens keep subcategories stacked vertically under the circle and full width */
+  .subcategories-list {
+    position: static;
+    transform: none;
+    top: auto;
+    left: auto;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 0.6rem;
+    background: transparent;
+  }
+
+  .subcategory-item {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .subcategory-filter {
+    padding: 1.5rem 1rem;
+  }
+
+  .subcategory-container {
+    gap: 1rem;
+  }
+
+  .category-oval {
+    width: 70px;
+    height: 70px;
+  }
+
+  .oval-icon {
+    font-size: 1.25rem;
+  }
+
+  .oval-name {
+    font-size: 0.65rem;
+  }
+
+  .subcategories-list {
+    gap: 0.4rem;
+  }
+
+  .subcategory-item {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.75rem;
+  }
+}

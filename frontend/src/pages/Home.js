@@ -15,8 +15,9 @@ const Home = () => {
   useEffect(() => {
     const fetchFeaturedProducts = async () => {
       try {
-        const response = await api.get('/products?limit=8');
-        setFeaturedProducts(response.data);
+        const response = await api.get('/products');
+        // Limit to 6 products for featured section
+        setFeaturedProducts(response.data.slice(0, 6));
       } catch (err) {
         setError('Failed to load featured products');
         console.error('Error fetching products:', err);

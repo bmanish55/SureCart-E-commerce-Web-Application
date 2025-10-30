@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
+import { WishlistProvider } from './context/WishlistContext';
 import Layout from './components/layout/Layout';
 import Home from './pages/Home';
 import Products from './pages/Products';
@@ -23,7 +24,8 @@ function App() {
     <Router>
       <AuthProvider>
         <CartProvider>
-          <Layout>
+          <WishlistProvider>
+            <Layout>
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/products" element={<Products />} />
@@ -40,7 +42,8 @@ function App() {
               <Route path="/login" element={<AuthPage />} />
               <Route path="/register" element={<AuthPage />} />
             </Routes>
-          </Layout>
+            </Layout>
+          </WishlistProvider>
         </CartProvider>
       </AuthProvider>
     </Router>

@@ -24,6 +24,30 @@ class Product {
     return products;
   }
 
+  static async findBySubcategory(subcategory) {
+    const [products] = await pool.execute(
+      'SELECT * FROM products WHERE subcategory = ? ORDER BY created_at DESC',
+      [subcategory]
+    );
+    return products;
+  }
+
+  static async findByCategoryAndSubcategory(category, subcategory) {
+    const [products] = await pool.execute(
+      'SELECT * FROM products WHERE category = ? AND subcategory = ? ORDER BY created_at DESC',
+      [category, subcategory]
+    );
+    return products;
+  }
+
+  static async getSubcategories(category) {
+    const [subcategories] = await pool.execute(
+      'SELECT DISTINCT subcategory FROM products WHERE category = ? AND subcategory IS NOT NULL ORDER BY subcategory',
+      [category]
+    );
+    return subcategories.map(sub => sub.subcategory);
+  }
+
   static async searchProducts(query) {
     const [products] = await pool.execute(
       'SELECT * FROM products WHERE name LIKE ? OR description LIKE ? ORDER BY created_at DESC',

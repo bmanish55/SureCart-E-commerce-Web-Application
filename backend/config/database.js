@@ -35,7 +35,10 @@ async function initializeDatabase() {
       password: dbConfig.password
     });
     
-    await connection.execute(`CREATE DATABASE IF NOT EXISTS ${process.env.DB_NAME}`);
+    // Drop database if exists (to refresh schema during development)
+    await connection.execute(`DROP DATABASE IF EXISTS ${process.env.DB_NAME || 'ecommerce_db'}`);
+    
+    await connection.execute(`CREATE DATABASE IF NOT EXISTS ${process.env.DB_NAME || 'ecommerce_db'}`);
     await connection.end();
     
     console.log('✅ Database created or already exists');
@@ -68,6 +71,7 @@ async function createTables() {
         description TEXT,
         price DECIMAL(10, 2) NOT NULL,
         category VARCHAR(100) NOT NULL,
+        subcategory VARCHAR(100),
         image_url VARCHAR(500),
         stock_quantity INT DEFAULT 0,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -146,6 +150,14 @@ async function insertSampleData() {
         ['Test User', 'test@example.com', hashedPassword2]
       );
       console.log('✅ Test user created successfully');
+      
+      // Create a third user for testing
+      const hashedPassword3 = await bcrypt.hash('123456', 10);
+      await pool.execute(
+        'INSERT INTO users (name, email, password) VALUES (?, ?, ?)',
+        ['Tirtha User', 'tirtha@gmail.com', hashedPassword3]
+      );
+      console.log('✅ Tirtha user created successfully');
     }
 
     // Check if products already exist
@@ -156,108 +168,368 @@ async function insertSampleData() {
     }
 
     const sampleProducts = [
+      // Electronics - Mobile And Tablets
+      {
+        name: "iPhone 14 Pro",
+        description: "Latest iPhone with advanced camera and processor. Perfect for photography and gaming.",
+        price: 89999,
+        category: "Electronics",
+        subcategory: "Mobile And Tablets",
+        image_url: "/images/iphone.jpg",
+        stock_quantity: 20
+      },
+      {
+        name: "Samsung Galaxy S23",
+        description: "Flagship Android smartphone with stunning display and performance.",
+        price: 79999,
+        category: "Electronics",
+        subcategory: "Mobile And Tablets",
+        image_url: "/images/samsung.jpg",
+        stock_quantity: 25
+      },
+      {
+        name: "iPad Air",
+        description: "Powerful tablet for work and entertainment with M1 chip.",
+        price: 59999,
+        category: "Electronics",
+        subcategory: "Mobile And Tablets",
+        image_url: "/images/ipad.jpg",
+        stock_quantity: 15
+      },
+      {
+        name: "OnePlus 11",
+        description: "Fast and smooth Android phone with 5G connectivity.",
+        price: 49999,
+        category: "Electronics",
+        subcategory: "Mobile And Tablets",
+        image_url: "/images/oneplus.jpg",
+        stock_quantity: 30
+      },
+
+      // Electronics - Computer and Laptops
+      {
+        name: "Dell XPS 13 Laptop",
+        description: "Ultra-slim laptop with Intel Core i7 processor and 16GB RAM. Perfect for professionals.",
+        price: 99999,
+        category: "Electronics",
+        subcategory: "Computer and Laptops",
+        image_url: "/images/dell-xps.jpg",
+        stock_quantity: 15
+      },
+      {
+        name: "MacBook Pro 14",
+        description: "Powerful laptop with Apple M2 chip and stunning Retina display.",
+        price: 149999,
+        category: "Electronics",
+        subcategory: "Computer and Laptops",
+        image_url: "/images/macbook.jpg",
+        stock_quantity: 12
+      },
+      {
+        name: "HP Pavilion Gaming Laptop",
+        description: "Gaming laptop with RTX 3050 graphics and high refresh rate display.",
+        price: 79999,
+        category: "Electronics",
+        subcategory: "Computer and Laptops",
+        image_url: "/images/hp-gaming.jpg",
+        stock_quantity: 18
+      },
+
+      // Electronics - Audio and Wearables
+      {
+        name: "Sony WH-1000XM5 Headphones",
+        description: "Premium noise-cancelling headphones with industry-leading sound quality.",
+        price: 29999,
+        category: "Electronics",
+        subcategory: "Audio and Wearables",
+        image_url: "/images/sony-headphones.jpg",
+        stock_quantity: 25
+      },
+      {
+        name: "Apple Watch Series 8",
+        description: "Advanced fitness tracking with health monitoring and always-on display.",
+        price: 45999,
+        category: "Electronics",
+        subcategory: "Audio and Wearables",
+        image_url: "/images/apple-watch.jpg",
+        stock_quantity: 20
+      },
+      {
+        name: "Samsung Galaxy Buds Pro",
+        description: "True wireless earbuds with active noise cancellation and premium sound.",
+        price: 16999,
+        category: "Electronics",
+        subcategory: "Audio and Wearables",
+        image_url: "/images/samsung-buds.jpg",
+        stock_quantity: 35
+      },
+
+      // Sports - Cricket
+      {
+        name: "Professional Cricket Bat",
+        description: "Premium cricket bat made with English willow. Excellent grip and balance.",
+        price: 8999,
+        category: "Sports",
+        subcategory: "Cricket",
+        image_url: "/images/cricket-bat.jpg",
+        stock_quantity: 20
+      },
+      {
+        name: "Cricket Ball Set",
+        description: "Professional cricket balls set of 6 with leather cover.",
+        price: 1299,
+        category: "Sports",
+        subcategory: "Cricket",
+        image_url: "/images/cricket-ball.jpg",
+        stock_quantity: 50
+      },
+      {
+        name: "Cricket Helmet",
+        description: "Safety cricket helmet with protective visor and comfortable padding.",
+        price: 2499,
+        category: "Sports",
+        subcategory: "Cricket",
+        image_url: "/images/cricket-helmet.jpg",
+        stock_quantity: 30
+      },
+
+      // Sports - Football
+      {
+        name: "Professional Football",
+        description: "Regulation size football for professional matches with superior grip.",
+        price: 1899,
+        category: "Sports",
+        subcategory: "Football",
+        image_url: "/images/football.jpg",
+        stock_quantity: 40
+      },
+      {
+        name: "Football Boots",
+        description: "Premium football boots with enhanced traction and comfort.",
+        price: 4999,
+        category: "Sports",
+        subcategory: "Football",
+        image_url: "/images/football-boots.jpg",
+        stock_quantity: 25
+      },
+      {
+        name: "Football Shin Guards",
+        description: "Protective shin guards for safe and comfortable play.",
+        price: 999,
+        category: "Sports",
+        subcategory: "Football",
+        image_url: "/images/shin-guards.jpg",
+        stock_quantity: 35
+      },
+
+      // Sports - Basketball
+      {
+        name: "Professional Basketball",
+        description: "Official size basketball with superior grip and durability.",
+        price: 2299,
+        category: "Sports",
+        subcategory: "Basketball",
+        image_url: "/images/basketball.jpg",
+        stock_quantity: 30
+      },
+      {
+        name: "Basketball Shoes",
+        description: "High-performance basketball shoes with ankle support.",
+        price: 5999,
+        category: "Sports",
+        subcategory: "Basketball",
+        image_url: "/images/basketball-shoes.jpg",
+        stock_quantity: 20
+      },
+      {
+        name: "Basketball Socks",
+        description: "Comfortable basketball socks with arch support and cushioning.",
+        price: 599,
+        category: "Sports",
+        subcategory: "Basketball",
+        image_url: "/images/basketball-socks.jpg",
+        stock_quantity: 50
+      },
+
+      // Sports - Tennis
+      {
+        name: "Professional Tennis Racket",
+        description: "Carbon fiber tennis racket with superior control and power.",
+        price: 7999,
+        category: "Sports",
+        subcategory: "Tennis",
+        image_url: "/images/tennis-racket.jpg",
+        stock_quantity: 15
+      },
+      {
+        name: "Tennis Ball Set",
+        description: "Can of 3 professional tennis balls with excellent performance.",
+        price: 399,
+        category: "Sports",
+        subcategory: "Tennis",
+        image_url: "/images/tennis-ball.jpg",
+        stock_quantity: 60
+      },
+      {
+        name: "Tennis Shoes",
+        description: "Specialized tennis shoes designed for court play.",
+        price: 4499,
+        category: "Sports",
+        subcategory: "Tennis",
+        image_url: "/images/tennis-shoes.jpg",
+        stock_quantity: 25
+      },
+
+      // Sports - Badminton
+      {
+        name: "Professional Badminton Racket",
+        description: "Lightweight badminton racket perfect for competitive play.",
+        price: 2999,
+        category: "Sports",
+        subcategory: "Badminton",
+        image_url: "/images/badminton-racket.jpg",
+        stock_quantity: 35
+      },
+      {
+        name: "Badminton Shuttle Cock",
+        description: "Pack of 10 professional badminton shuttles with feather.",
+        price: 499,
+        category: "Sports",
+        subcategory: "Badminton",
+        image_url: "/images/shuttle.jpg",
+        stock_quantity: 80
+      },
+      {
+        name: "Badminton Net",
+        description: "Professional badminton net with adjustable stand.",
+        price: 3499,
+        category: "Sports",
+        subcategory: "Badminton",
+        image_url: "/images/badminton-net.jpg",
+        stock_quantity: 10
+      },
+
+      // Clothing - Mens
+      {
+        name: "Premium Cotton T-Shirt",
+        description: "Comfortable 100% cotton t-shirt for men in various colors.",
+        price: 899,
+        category: "Clothing",
+        subcategory: "Mens",
+        image_url: "/images/mens-tshirt.jpg",
+        stock_quantity: 100
+      },
+      {
+        name: "Casual Denim Jeans",
+        description: "Comfortable denim jeans with perfect fit and modern style.",
+        price: 1599,
+        category: "Clothing",
+        subcategory: "Mens",
+        image_url: "/images/mens-jeans.jpg",
+        stock_quantity: 75
+      },
+      {
+        name: "Formal Shirt",
+        description: "Premium formal shirt perfect for office and occasions.",
+        price: 1299,
+        category: "Clothing",
+        subcategory: "Mens",
+        image_url: "/images/formal-shirt.jpg",
+        stock_quantity: 50
+      },
+
+      // Clothing - Womens
+      {
+        name: "Women's Cotton Dress",
+        description: "Elegant cotton dress perfect for casual and formal occasions.",
+        price: 1499,
+        category: "Clothing",
+        subcategory: "Womens",
+        image_url: "/images/womens-dress.jpg",
+        stock_quantity: 60
+      },
+      {
+        name: "Women's Denim Jeans",
+        description: "Stylish women's denim jeans with comfortable fit.",
+        price: 1799,
+        category: "Clothing",
+        subcategory: "Womens",
+        image_url: "/images/womens-jeans.jpg",
+        stock_quantity: 70
+      },
+      {
+        name: "Women's Tops",
+        description: "Trendy women's tops in various colors and designs.",
+        price: 799,
+        category: "Clothing",
+        subcategory: "Womens",
+        image_url: "/images/womens-tops.jpg",
+        stock_quantity: 80
+      },
+
+      // Clothing - Kids
+      {
+        name: "Kids T-Shirt",
+        description: "Colorful t-shirt for kids made from soft cotton.",
+        price: 499,
+        category: "Clothing",
+        subcategory: "Kids",
+        image_url: "/images/kids-tshirt.jpg",
+        stock_quantity: 120
+      },
+      {
+        name: "Kids Shorts",
+        description: "Comfortable shorts for kids perfect for play and casual wear.",
+        price: 699,
+        category: "Clothing",
+        subcategory: "Kids",
+        image_url: "/images/kids-shorts.jpg",
+        stock_quantity: 90
+      },
+      {
+        name: "Kids Jacket",
+        description: "Warm and stylish jacket for kids in various sizes.",
+        price: 1299,
+        category: "Clothing",
+        subcategory: "Kids",
+        image_url: "/images/kids-jacket.jpg",
+        stock_quantity: 50
+      },
+
+      // Additional products (Home, Accessories, etc)
       {
         name: "Wireless Bluetooth Headphones",
-        description: "High-quality wireless headphones with noise cancellation. Perfect for music lovers and professionals.",
-        price: 4999, // ₹4,999
+        description: "High-quality wireless headphones with noise cancellation.",
+        price: 4999,
         category: "Electronics",
+        subcategory: null,
         image_url: "/images/headphones.jpg",
         stock_quantity: 50
       },
       {
-        name: "Smart Fitness Watch",
-        description: "Advanced fitness tracking with heart rate monitor, GPS, and 7-day battery life.",
-        price: 12999, // ₹12,999
-        category: "Electronics",
-        image_url: "/images/smartwatch.jpg",
-        stock_quantity: 30
-      },
-      {
-        name: "Cotton T-Shirt",
-        description: "Comfortable 100% cotton t-shirt available in multiple colors. Machine washable.",
-        price: 899, // ₹899
-        category: "Clothing",
-        image_url: "/images/tshirt.jpg",
-        stock_quantity: 100
-      },
-      {
         name: "Professional Coffee Maker",
-        description: "Programmable coffee maker with thermal carafe and built-in grinder.",
-        price: 5999, // ₹5,999
+        description: "Programmable coffee maker with thermal carafe.",
+        price: 5999,
         category: "Home",
+        subcategory: null,
         image_url: "/images/coffeemaker.jpg",
         stock_quantity: 25
       },
       {
-        name: "Running Shoes",
-        description: "Lightweight running shoes with advanced cushioning technology for maximum comfort.",
-        price: 4599, // ₹4,599
-        category: "Sports",
-        image_url: "/images/shoes.jpg",
-        stock_quantity: 40
-      },
-      {
         name: "Waterproof Backpack",
-        description: "Water-resistant backpack with laptop compartment and multiple organizational pockets.",
-        price: 2499, // ₹2,499
+        description: "Water-resistant backpack with laptop compartment.",
+        price: 2499,
         category: "Accessories",
+        subcategory: null,
         image_url: "/images/backpack.jpg",
         stock_quantity: 60
-      },
-      {
-        name: "Wireless Mouse",
-        description: "Ergonomic wireless mouse with precision tracking and long battery life.",
-        price: 1499, // ₹1,499
-        category: "Electronics",
-        image_url: "/images/mouse.jpg",
-        stock_quantity: 75
-      },
-      {
-        name: "Yoga Mat",
-        description: "Non-slip yoga mat with carrying strap. Perfect for yoga and exercise routines.",
-        price: 1299, // ₹1,299
-        category: "Sports",
-        image_url: "/images/yogamat.jpg",
-        stock_quantity: 80
-      },
-      {
-        name: "Smartphone",
-        description: "Latest smartphone with high-resolution camera and fast processor.",
-        price: 25999, // ₹25,999
-        category: "Electronics",
-        image_url: "/images/smartphone.jpg",
-        stock_quantity: 20
-      },
-      {
-        name: "Jeans",
-        description: "Comfortable denim jeans with perfect fit and modern style.",
-        price: 1599, // ₹1,599
-        category: "Clothing",
-        image_url: "/images/jeans.jpg",
-        stock_quantity: 75
-      },
-      {
-        name: "Study Table",
-        description: "Ergonomic study table with ample storage space.",
-        price: 7999, // ₹7,999
-        category: "Home",
-        image_url: "/images/study-table.jpg",
-        stock_quantity: 15
-      },
-      {
-        name: "Cricket Bat",
-        description: "Professional grade cricket bat with excellent grip.",
-        price: 3499, // ₹3,499
-        category: "Sports",
-        image_url: "/images/cricket-bat.jpg",
-        stock_quantity: 30
       }
     ];
 
     for (const product of sampleProducts) {
       await pool.execute(
-        'INSERT INTO products (name, description, price, category, image_url, stock_quantity) VALUES (?, ?, ?, ?, ?, ?)',
-        [product.name, product.description, product.price, product.category, product.image_url, product.stock_quantity]
+        'INSERT INTO products (name, description, price, category, subcategory, image_url, stock_quantity) VALUES (?, ?, ?, ?, ?, ?, ?)',
+        [product.name, product.description, product.price, product.category, product.subcategory, product.image_url, product.stock_quantity]
       );
     }
 

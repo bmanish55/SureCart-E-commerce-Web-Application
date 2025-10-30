@@ -7,7 +7,7 @@ import './ProductDetails.css';
 const ProductDetails = ({ product }) => {
   const [quantity, setQuantity] = useState(1);
   const [isAdding, setIsAdding] = useState(false);
-  const { addToCart } = useCart();
+  const { addToCart, openQuickCart } = useCart();
   const { isAuthenticated } = useAuth();
 
   const handleQuantityChange = (e) => {
@@ -18,16 +18,14 @@ const ProductDetails = ({ product }) => {
   };
 
   const handleAddToCart = async () => {
-    if (!isAuthenticated) {
-      // Redirect to login or show message
-      return;
-    }
-
+    // Allow adding to cart for both guests and authenticated users
     setIsAdding(true);
     try {
       await addToCart(product, quantity);
       setQuantity(1);
-      // Show success message
+      // open quick cart preview if available
+      if (openQuickCart) openQuickCart();
+      // Show success message (could be a toast)
     } catch (error) {
       console.error('Error adding to cart:', error);
     } finally {

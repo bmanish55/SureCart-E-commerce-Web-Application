@@ -72,7 +72,8 @@ These steps assume you've unzipped the project to a folder (for example `D:\proj
 
 
 
-https://github.com/user-attachments/assets/77366792-e355-419c-8e66-efe93ded4c5f
+https://github.com/user-attachments/assets/b523e101-0ae8-4b98-9ac8-0b6cd1de4342
+
 
 
 

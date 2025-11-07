@@ -129,36 +129,8 @@ async function createTables() {
 
 async function insertSampleData() {
   try {
-    // Check if users already exist
-    const [users] = await pool.execute('SELECT COUNT(*) as count FROM users');
-    
-    // Create demo user if no users exist
-    if (users[0].count === 0) {
-      const bcrypt = require('bcryptjs');
-      const hashedPassword = await bcrypt.hash('password123', 10);
-      
-      await pool.execute(
-        'INSERT INTO users (name, email, password) VALUES (?, ?, ?)',
-        ['Demo User', 'demo@example.com', hashedPassword]
-      );
-      console.log('✅ Demo user created successfully');
-      
-      // Create a second test user
-      const hashedPassword2 = await bcrypt.hash('test123', 10);
-      await pool.execute(
-        'INSERT INTO users (name, email, password) VALUES (?, ?, ?)',
-        ['Test User', 'test@example.com', hashedPassword2]
-      );
-      console.log('✅ Test user created successfully');
-      
-      // Create a third user for testing
-      const hashedPassword3 = await bcrypt.hash('123456', 10);
-      await pool.execute(
-        'INSERT INTO users (name, email, password) VALUES (?, ?, ?)',
-        ['Tirtha User', 'tirtha@gmail.com', hashedPassword3]
-      );
-      console.log('✅ Tirtha user created successfully');
-    }
+    // Note: Demo users are no longer created automatically
+    // Users must register through the application
 
     // Check if products already exist
     const [products] = await pool.execute('SELECT COUNT(*) as count FROM products');

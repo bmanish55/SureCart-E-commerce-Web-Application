@@ -27,7 +27,7 @@ const Footer = () => {
               <a href="https://www.instagram.com/accounts/login/?hl=en" aria-label="Visit our Instagram page" target="_blank" rel="noopener noreferrer">
                 <i className="fab fa-instagram"></i>
               </a>
-              <a href="https://www.linkedin.com/in/tanvi-dogmane/" aria-label="Visit our LinkedIn page" target="_blank" rel="noopener noreferrer">
+              <a href="https://www.linkedin.com/in/manish-bhavar-598aba297/" aria-label="Visit our LinkedIn page" target="_blank" rel="noopener noreferrer">
                 <i className="fab fa-linkedin"></i>
               </a>
             </div>
@@ -69,7 +69,7 @@ const Footer = () => {
               </p>
               <p title="Email us">
                 <i className="fas fa-envelope"></i>
-                <a href="mailto:tanvid.mca_iom@bkc.met.edu" style={{ color: 'inherit', textDecoration: 'none' }}>tanvid.mca_iom@bkc.met.edu</a>
+                <a href="mailto:mbhavar2121@gmail.com" style={{ color: 'inherit', textDecoration: 'none' }}>mbhavar2121@gmail.com</a>
               </p>
             </div>
           </div>

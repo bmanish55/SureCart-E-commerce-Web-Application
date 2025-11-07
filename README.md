@@ -59,9 +59,7 @@ These steps assume you've unzipped the project to a folder (for example `D:\proj
 4. Verify
 
    - Open `http://localhost:3000`
-   - Use the seeded demo accounts (if present) to log in:
-     - `demo@example.com` / `password123`
-     - `test@example.com` / `test123`
+   - Register !
    - Try Products, Cart, Checkout and Orders pages.
 
 ## Environment hints
@@ -72,7 +70,8 @@ These steps assume you've unzipped the project to a folder (for example `D:\proj
 
 
 
-https://github.com/user-attachments/assets/b523e101-0ae8-4b98-9ac8-0b6cd1de4342
+https://github.com/user-attachments/assets/3a695c37-5908-4bf3-a287-10357867e24e
+
 
 
 
@@ -87,9 +86,5 @@ https://github.com/user-attachments/assets/b523e101-0ae8-4b98-9ac8-0b6cd1de4342
 - `EADDRINUSE` on port 5000: change `PORT` in `backend/.env` or stop the process using that port.
 - 401 errors: check `JWT_SECRET` and confirm frontend is passing Authorization header (the app stores token in localStorage).
 
-## Contact Devloper
-Tanvi Dogmane: tanvidogmane@gmail.com
-
----
 
 Thank you — enjoy exploring the app!

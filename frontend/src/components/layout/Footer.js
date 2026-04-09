@@ -44,17 +44,6 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Categories Section */}
-          <div className="footer-section">
-            <h3>Categories</h3>
-            <ul className="footer-links">
-              <li><Link to="/products?category=Electronics">Electronics</Link></li>
-              <li><Link to="/products?category=Clothing">Clothing</Link></li>
-              <li><Link to="/products?category=Home">Home & Kitchen</Link></li>
-              <li><Link to="/products?category=Sports">Sports</Link></li>
-            </ul>
-          </div>
-
           {/* Contact Info Section */}
           <div className="footer-section">
             <h3>Contact Info</h3>

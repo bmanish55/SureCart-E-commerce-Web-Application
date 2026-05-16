@@ -1,5 +1,5 @@
 .footer {
-  background-color: #212121; /* Updated to a solid dark color */
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
   color: var(--text-white);
   margin-top: auto;
   position: relative;
@@ -18,7 +18,7 @@
 
 .footer-content {
   display: grid;
-  grid-template-columns: 2fr 1fr 1.5fr; /* Adjusted for 3 columns */
+  grid-template-columns: 2fr 1fr 1.5fr;
   gap: 3rem;
   padding: 4rem 0 2rem;
   position: relative;
@@ -37,10 +37,8 @@
   animation-delay: 0.2s;
 }
 
-/* Removed the rule for nth-child(3) (Categories) */
-
-.footer-section:nth-child(3) { /* This now targets the Contact Info section */
-  animation-delay: 0.3s; /* Adjusted delay */
+.footer-section:nth-child(3) {
+  animation-delay: 0.3s;
 }
 
 .footer-section h3 {
